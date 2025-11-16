@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useInView } from "framer-motion"; // ✅ Import useInView
+import { motion, useInView } from "framer-motion";
 import image9 from "../../assets/meno.png";
 import image10 from "../../assets/preg.png";
 import image11 from "../../assets/hair.png";
 
 const ServicesSection = () => {
   const ref = useRef(null); 
-  const isInView = useInView(ref, { once: false }); // ✅ Triggers on scroll
+  const isInView = useInView(ref, { once: false });
 
   const services = [
     { title: "Pregnancy", path: "/pregnancy", img: image9 },
@@ -21,7 +21,7 @@ const ServicesSection = () => {
         <motion.h2
           className="text-5xl font-bold text-gray-800 mb-12"
           initial={{ y: -50, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }} // ✅ Animates when in view
+          animate={isInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }}
           transition={{ duration: 0.8 }}
         >
           SERVICES WE OFFER
@@ -30,7 +30,7 @@ const ServicesSection = () => {
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
           initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} // ✅ Animates only when visible
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 1 }}
         >
           {services.map((service, index) => (
@@ -38,7 +38,7 @@ const ServicesSection = () => {
               key={index}
               className="bg-white bg-opacity-80 rounded-2xl shadow-xl p-6 flex flex-col items-center transition transform hover:scale-105 hover:shadow-2xl w-[350px] h-[400px]"
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }} // ✅ Triggers animation when visible
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.5 }}
               whileHover={{
                 scale: 1.1,

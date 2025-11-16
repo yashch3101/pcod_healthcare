@@ -28,7 +28,7 @@ function CreateProfile() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/doctor/profile", {
+      const response = await axios.post("https://pcod-healthcare.onrender.com/api/doctor/profile", {
         email,
         password,
         ...formData,

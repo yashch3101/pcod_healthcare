@@ -18,8 +18,8 @@ function Login() {
     e.preventDefault();
 
     const endpoint = isLogin
-      ? "http://localhost:5000/api/doctor/auth/login"
-      : "http://localhost:5000/api/doctor/auth/register";
+      ? "https://pcod-healthcare.onrender.com/api/doctor/auth/login"
+      : "https://pcod-healthcare.onrender.com/api/doctor/auth/register";
 
     try {
       const response = await axios.post(endpoint, {

@@ -13,7 +13,7 @@ export function MonthlyCalendar({ exercises = [] }) {
   const fetchProgress = async () => {
     const userId = localStorage.getItem("userId") || "demoUser";
     try {
-      const res = await axios.get(`http://localhost:5000/api/progress/${userId}`);
+      const res = await axios.get(`https://pcod-healthcare.onrender.com/api/progress/${userId}`);
       const newProgress = {};
       res.data.forEach((item) => {
         const formattedDate = new Date(item.date).toISOString().split("T")[0];
@@ -51,7 +51,7 @@ export function MonthlyCalendar({ exercises = [] }) {
     if (progressPercentage === 100 && !hasPosted) {
       const userId = localStorage.getItem("userId") || "demoUser";
       axios
-        .post("http://localhost:5000/api/progress/complete", { userId })
+        .post("https://pcod-healthcare.onrender.com/api/progress/complete", { userId })
         .then(() => {
           console.log("✅ Progress saved for today");
           setHasPosted(true);

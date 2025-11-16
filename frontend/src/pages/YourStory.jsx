@@ -13,13 +13,13 @@ export default function YourStory() {
   const userName = localStorage.getItem("username") || "Anonymous";
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/stories").then((res) => setStories(res.data));
-    axios.get(`http://localhost:5000/api/stories/user/${userId}`).then((res) => setMyStories(res.data));
+    axios.get("https://pcod-healthcare.onrender.com/api/stories").then((res) => setStories(res.data));
+    axios.get(`https://pcod-healthcare.onrender.com/api/stories/user/${userId}`).then((res) => setMyStories(res.data));
   }, []);
 
   const submitStory = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:5000/api/stories", {
+    await axios.post("https://pcod-healthcare.onrender.com/api/stories", {
       userId,
       userName,
       title,
@@ -31,7 +31,7 @@ export default function YourStory() {
     setContent("");
     setImage("");
     alert("Story posted successfully!");
-    const res = await axios.get("http://localhost:5000/api/stories");
+    const res = await axios.get("https://pcod-healthcare.onrender.com/api/stories");
     setStories(res.data);
   };
 

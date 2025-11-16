@@ -27,7 +27,7 @@ export default function TrackerDetail() {
     if (progress === 100) {
       const userId = localStorage.getItem("userId") || "demoUser";
 
-      axios.post("http://localhost:5000/api/progress/complete", { userId })
+      axios.post("https://pcod-healthcare.onrender.com/api/progress/complete", { userId })
         .then(() => {
           toast.success("🎉 Great job! All exercises completed today!");
         })

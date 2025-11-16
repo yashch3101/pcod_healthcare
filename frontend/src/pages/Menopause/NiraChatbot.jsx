@@ -30,7 +30,7 @@ const NiraChatbot = () => {
     setInput('');
     setLoading(true);
 
-    await fetch("http://127.0.0.1:5000/chat", {
+    await fetch("https://pcod-ml.onrender.com/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

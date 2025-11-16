@@ -43,11 +43,11 @@ export default function Community() {
   useEffect(() => {
     if (!verified) return;
 
-    const newSocket = io("http://localhost:5000");
+    const newSocket = io("https://pcod-healthcare.onrender.com");
     setSocket(newSocket);
 
     axios
-      .get("http://localhost:5000/api/community")
+      .get("https://pcod-healthcare.onrender.com/api/community")
       .then((res) => {
         console.log("📥 Fetched posts:", res.data);
         setPosts(res.data);
@@ -184,7 +184,7 @@ export default function Community() {
         console.log("📤 Sending gender:", gender);
 
         const res = await axios.post(
-          "http://localhost:5000/api/community",
+          "https://pcod-healthcare.onrender.com/api/community",
           { category, content, tags, authorName: username },
           {
             headers: { "x-user-gender": gender },

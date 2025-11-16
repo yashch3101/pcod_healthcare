@@ -24,7 +24,7 @@ function AppointmentsView({ appointments, setAppointments, userId }) {
 
     const newAppt = { userId, title, doctor, date, time }
     try {
-      const res = await axios.post("http://localhost:5000/api/appointments", newAppt)
+      const res = await axios.post("https://pcod-healthcare.onrender.com/api/appointments", newAppt)
       setAppointments([res.data, ...appointments])
       setShowForm(false)
       setNewAppointment({ title: "", doctor: "", date: "", time: "" })
@@ -40,7 +40,7 @@ function AppointmentsView({ appointments, setAppointments, userId }) {
     const time = prompt("Enter new time (e.g., 4:00 PM):")
 
     if (date && time) {
-      const res = await axios.put(`http://localhost:5000/api/appointments/${id}`, { date, time })
+      const res = await axios.put(`https://pcod-healthcare.onrender.com/api/appointments/${id}`, { date, time })
       setAppointments(appointments.map((a) => (a._id === id ? res.data : a)))
       alert("Appointment rescheduled successfully!")
     }
@@ -48,7 +48,7 @@ function AppointmentsView({ appointments, setAppointments, userId }) {
 
   const handleCancel = async (id) => {
     if (window.confirm("Cancel this appointment?")) {
-      await axios.delete(`http://localhost:5000/api/appointments/${id}`)
+      await axios.delete(`https://pcod-healthcare.onrender.com/api/appointments/${id}`)
       setAppointments(appointments.filter((a) => a._id !== id))
       alert("Appointment cancelled successfully.")
     }

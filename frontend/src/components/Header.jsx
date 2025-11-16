@@ -1,5 +1,5 @@
 import { Menu } from "lucide-react";
-import WalletConnect from "./WalletConnect"; // 🟢 Import your WalletConnect
+import WalletConnect from "./WalletConnect";
 
 function Header() {
   return (

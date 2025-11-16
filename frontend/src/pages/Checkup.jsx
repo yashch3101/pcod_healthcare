@@ -78,7 +78,7 @@ const Checkup = () => {
         };
 
         try {
-            const response = await axios.post("http://127.0.0.1:5000/predict", payload, {
+            const response = await axios.post("https://pcod-ml.onrender.com/predict", payload, {
                 headers: {
                 "x-api-key": "health-checker",
                 "Content-Type": "application/json"
