@@ -8,7 +8,7 @@ import os
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-model = joblib.load("Pcod/pcos_model_pipeline.pkl")
+model = joblib.load("pcos_model_pipeline.pkl")
 
 new_features = [
     'Age', 'Weight', 'Height(Cm)', 'BMI', 'Cycle(I/R)', 'Cycle length',
