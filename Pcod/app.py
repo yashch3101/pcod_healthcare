@@ -3,9 +3,9 @@ from flask_cors import CORS
 import joblib
 import pandas as pd
 import requests
+import os
 
 app = Flask(__name__)
-
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 model = joblib.load("pcos_model_pipeline.pkl")
@@ -16,7 +16,8 @@ new_features = [
     'Hair growth', 'Skin darkening', 'Acne', 'Insulin levels (æIU/ml)'
 ]
 
-API_KEY = "health-checker"
+API_KEY = os.environ.get("PCOD_API_KEY", "health-checker")
+GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
 
 @app.route('/')
 def home():
@@ -37,43 +38,54 @@ def predict():
         input_df = input_df[new_features]
 
         prediction = model.predict(input_df)[0]
+
         return jsonify({
             "prediction": int(prediction),
             "message": "PCOS/PCOD Positive" if prediction == 1 else "PCOS/PCOD Negative"
         })
+
     except Exception as e:
-        return jsonify({"error": str(e)})
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
         data = request.get_json()
         user_input = data.get("message", "").strip()
+
         if not user_input:
-            return jsonify({"reply": "Please type something."}), 200
+            return jsonify({"reply": "Please type something."})
 
-        gemini_api = "AIzaSyCuQxUcPlmbjjUDIRs--2Cs04L4PFhFxW0"
+        url = (
+            f"https://generativelanguage.googleapis.com/v1beta/models/"
+            f"gemini-2.0-flash:generateContent?key={GEMINI_KEY}"
+        )
 
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_api}"
-        response = requests.post(url, json={"contents": [{"parts": [{"text": user_input}]}]})
+        response = requests.post(url, json={
+            "contents": [{"parts": [{"text": user_input}]}]
+        })
 
         if response.status_code == 429:
-            return jsonify({"reply": "I'm getting too many requests. Please try again later."}), 200
-        elif response.status_code != 200:
-            return jsonify({"reply": "Gemini API error occurred."}), 200
+            return jsonify({"reply": "I'm getting too many requests. Please try again later."})
 
-        data = response.json()
+        if response.status_code != 200:
+            return jsonify({"reply": "Gemini API error occurred."})
+
+        resp_data = response.json()
         reply = (
-            data.get("candidates", [{}])[0]
-            .get("content", {})
-            .get("parts", [{}])[0]
-            .get("text", "")
+            resp_data.get("candidates", [{}])[0]
+                .get("content", {})
+                .get("parts", [{}])[0]
+                .get("text", "")
         )
 
         return jsonify({"reply": reply})
+
     except Exception as e:
         return jsonify({"reply": f"Server error: {str(e)}"}), 500
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
